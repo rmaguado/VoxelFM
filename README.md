@@ -22,6 +22,9 @@ pip install deepspeed
 pip install flash-attn --no-build-isolation
 ```
 
+## Pre-trained Weights
+
+The model weights used in our paper are available in our [huggingface](https://huggingface.co/rmaguado/VoxelFM) page and can be downloaded as shown in the example below. 
 
 ## Inference
 
@@ -42,8 +45,8 @@ from omegaconf import OmegaConf
 from huggingface_hub import hf_hub_download
 from dinov2.inference import build_model, extract_features
 
-checkpoint_path = hf_hub_download("rmaguado/voxelFM", "vitb_3d/checkpoints/99999.pth")
-config_path = hf_hub_download("rmaguado/voxelFM", "vitb_3d/config.yaml")
+checkpoint_path = hf_hub_download("rmaguado/VoxelFM", "vitb_3d/checkpoints/99999.pth")
+config_path = hf_hub_download("rmaguado/VoxelFM", "vitb_3d/config.yaml")
 
 config = OmegaConf.load(config_path)
 device = torch.device("cuda")
