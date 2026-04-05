@@ -1,0 +1,39 @@
+name: default
+output_dir: runs/evaluations/default
+num_workers: 20
+seed: 4
+
+data:
+  embeddings_path: /path/to/embeddings # this dir should contain the .pth files of precomputed embeddings
+  splits_path: /path/to/splits # this dir should contain train.csv, valid.csv, and test.csv
+  labels_path: /path/to/labels.csv
+  feature_key: cls
+  pooling: none
+  noise_p: 1.0
+  noise_sigma: 0.1
+
+training:
+  padding: true
+  batch_size: 16
+  grad_accum_steps: 4
+  weight_decay: 0.0
+  momentum: 0.9
+
+scheduler:
+  num_epochs: 20
+  warmup_epochs: 0
+  cosine_epochs: 0
+  min_lr: 1e-3
+  max_lr: 1e-3
+
+optimizer:
+  name: sgd
+
+model:
+  embed_dim: 864
+
+  head:
+    name: mlp
+    params:
+      hidden_dim: 1024
+      dropout: 0.5

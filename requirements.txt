@@ -1,0 +1,17 @@
+omegaconf
+polars
+pandas
+matplotlib
+tqdm
+pydicom
+nibabel
+simpleitk
+scikit-learn
+einops
+nvitop
+tabulate
+pytest
+huggingface_hub
+tensorboard
+peft
+lifelines

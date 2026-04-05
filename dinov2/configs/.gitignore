@@ -1,0 +1,3 @@
+*.yaml
+!*.yaml.template
+!ssl_default_config.yaml

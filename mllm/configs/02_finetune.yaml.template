@@ -1,0 +1,39 @@
+model:
+  model_name_or_path: Qwen/Qwen3-4B
+  mm_vision_hidden_size: null # REQUIRED
+  mm_projector_hidden_size: 2048
+  image_tokens: 128
+  lora:
+    enable: true
+    rank: 16
+    alpha: 32
+    lora_dropout: 0.05
+    modules: 
+      - "down_proj"
+      - "up_proj"
+      - "q_proj"
+      - "gate_proj"
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+    exclude_modules: ["mm_projector", "lm_head"]
+  pretrain_checkpoint_path: "runs/01_pretrain/final"
+
+data:
+  train_conversations_path: "/path/to/conversations/train.csv" # REQUIRED
+  eval_conversations_path: "/path/to/conversations/valid.csv" # REQUIRED
+  embeddings_path: "/path/to/embeddings" # REQUIRED
+  feature_key: cls
+  system_prompt: "You are a radiology assistant specialized in interpreting chest CT scans and generating concise, accurate radiology reports."
+  pooling: none
+  noise_p: 1.0
+  noise_sigma: 0.1
+
+train:
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 16
+  num_train_epochs: 10
+  logging_dir: "tensorboard"
+  warmup_ratio: 0.03
+  learning_rate: 2e-5
+  min_lr: 1e-6

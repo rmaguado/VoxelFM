@@ -1,0 +1,11 @@
+**/.ipynb_checkpoints/
+**/__pycache__/
+**/.DS_Store
+.vscode
+/datasets*
+*.tmp
+.env
+.bck
+**/*.log
+tensorboard
+*.run

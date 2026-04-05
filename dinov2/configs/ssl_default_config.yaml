@@ -1,0 +1,103 @@
+compute_precision: fp32
+dino:
+  loss_weight: 1.0
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+  koleo_loss_weight: 0.1
+ibot:
+  loss_weight: 1.0
+  mask_sample_probability: 0.5
+  mask_ratio_min_max:
+  - 0.1
+  - 0.5
+  separate_head: false
+  head_n_prototypes: 65536
+  head_bottleneck_dim: 256
+  head_nlayers: 3
+  head_hidden_dim: 2048
+train:
+  grad_accum_steps: 16
+  batch_size_per_gpu: 16
+  total_batch_size: 2048
+  output_dir: .
+  print_freq: 100
+  seed: 0
+  num_workers: 10
+  official_epoch_length: 1000
+evaluation:
+  eval_period_iterations: 10000
+student:
+  embed_dim: 864
+  depth: 12
+  num_heads: 12
+  patch_size: 14
+  mlp_ratio: 4
+  drop_path_rate: 0.1
+  layerscale: 1.0e-05
+  rope_base: 100.0
+  rope_rescale_coords: null
+  drop_path_uniform: true
+  pretrained_weights: ''
+  ffn_layer: "mlp"
+  qkv_bias: true
+  proj_bias: true
+  ffn_bias: true
+  num_register_tokens: 4
+optim:
+  epochs: 100
+  clip_grad: 3.0
+  patch_embed_lr_mult: 0.2
+  layerwise_decay: 0.9
+  adamw_beta1: 0.9
+  adamw_beta2: 0.999
+checkpointing:
+  period: 100
+  max_to_keep: 3
+  keep_every: 5000
+schedules:
+  lr:
+    start: 0.0
+    peak: 0.001
+    end: 1e-6
+    warmup_epochs: 10
+    freeze_last_layer_epochs: 1
+  weight_decay:
+    start: 0.04
+    peak: 0.04
+    end: 0.2
+    warmup_epochs: 0
+  momentum:
+    start: 0.994
+    peak: 0.994
+    end: 0.994
+    warmup_epochs: 0
+  teacher_temp:
+    start: 0.04
+    peak: 0.07
+    end: 0.07
+    warmup_epochs: 30
+crops:
+  global_crops_scale:
+  - 0.32
+  - 1.0
+  local_crops_number: 8
+  local_crops_scale:
+  - 0.05
+  - 0.32
+  global_crops_size: [112, 112, 112]
+  local_crops_size: [56, 56, 56]
+  crop_pairs_ratios: 1.0
+datasets:
+  - name: radiomics_datasets
+    weight: 1.0
+    index_path: .
+    modality: ct
+    storage: torch
+    pixel_range:
+      lower: -1000.0
+      upper: 1900.0
+    norm:
+      mean: -573.8
+      std: 461.3

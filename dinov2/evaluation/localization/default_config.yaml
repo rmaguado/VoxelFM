@@ -1,0 +1,30 @@
+name: localization_default
+output_dir: evaluation/localization
+num_workers: 16
+seed: 4
+
+data:
+  embeddings_path: /path/to/embeddings
+  splits_path: /path/to/splits
+  labels_path: /path/to/coords.csv
+  feature_key: patch
+  noise_p: 1.0
+  noise_sigma: 0.1
+
+training:
+  batch_size: 4
+  grad_accum_steps: 4
+  weight_decay: 1e-2
+
+scheduler:
+  num_epochs: 20
+  warmup_epochs: 0
+  cosine_epochs: 0
+  min_lr: 1e-4
+  max_lr: 1e-4
+
+model:
+  embed_dim: 864
+  params:
+    n_heads: 4
+    hidden_dim: 128
